@@ -16,7 +16,7 @@ const Cart: React.FC = () => {
   if(!Contextt){
     throw new Error('Context Not Found')
   }
-  const {isLogin} = Contextt
+  const {isLogin,setTotalProducts,totalProducts,setProductName,productName} = Contextt
   const [products, setProducts] = useState<Product[]>([]);
 
   const url = "https://dummyjson.com/products";
@@ -43,6 +43,10 @@ const handlePage = (pageNumber:number)=>{
   setCurrentPge(pageNumber)
 }
 const totalPage = Math.ceil(products.length/divPerPage)
+const handleAddCartButton=(name:string)=>{
+  setProductName((prevProductNames: string[]) => [...prevProductNames, name]);
+ setTotalProducts(totalProducts+1)
+}
   return (
     <>
     <div className="flex flex-col  items-center">
@@ -55,7 +59,7 @@ const totalPage = Math.ceil(products.length/divPerPage)
           ">
             <img
               className="w-full h-40
-               object-cover mb-4 rounded-r"
+               object-cover mb-4 rounded-t-lg"
               src={img}
               alt="Product"
             />
@@ -76,16 +80,18 @@ const totalPage = Math.ceil(products.length/divPerPage)
               {product.description.substring(0, 90)}...
             </p>
             <div className=" flex justify-center m-2">
-            <input hidden={!isLogin} className="absolute bottom-2 bg-orange-600 rounded-lg text-center text-white text-base cursor-pointer w-2/4 h-10 self-center" type="button" value={"Add To Cart"} />
+            <input onClick={()=>handleAddCartButton(product.title)} hidden={!isLogin} className="absolute bottom-2 bg-orange-600 rounded-lg text-center text-white text-base cursor-pointer w-2/4 h-10 self-center" type="button" value={"Add To Cart"} />
             </div>
           </div>
         
         ))}
       </div>
-      <div className="flex">
+      <div className="flex mt-6">
       <input
       disabled={currentPage<1}
-      onClick={()=>handlePage(currentPage-1)} type="button" value="Prev" className="bg-orange-700 w-16 h-7 text-white mx-4 text-base cursor-pointer
+      onClick={()=>handlePage(currentPage-1)} type="button" value="Prev" className="bg-orange-700 w-16 h-7 text-white 
+      rounded-tr-lg
+      mx-4 text-base cursor-pointer
       sm:w-20 sm:h-8 sm:text-lg
       md:w-24 md:h-9 md:text-xl
       lg:w-28 lg:h-10 lg:text-xl
@@ -94,7 +100,9 @@ const totalPage = Math.ceil(products.length/divPerPage)
       " />
       <input 
       disabled={currentPage==totalPage-1}
-      onClick={()=>handlePage(currentPage+1)}  type="button" value="Next" className="bg-orange-700 w-16 h-7 text-white mx-4 text-base cursor-pointer
+      onClick={()=>handlePage(currentPage+1)}  type="button" value="Next" className="bg-orange-700 w-16 h-7 text-white 
+      rounded-tl-lg
+      mx-4 text-base cursor-pointer
         sm:w-20 sm:h-8 sm:text-lg
       md:w-24 md:h-9 md:text-xl
       lg:w-28 lg:h-10 lg:text-xl

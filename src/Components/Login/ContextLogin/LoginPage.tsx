@@ -36,10 +36,10 @@ console.log(isLogin)
 
   return (
     <>
-      <div className="w-screen h-full flex justify-center items-center">
+      <div className="w-full h-full flex justify-center items-center">
         <div
           className="bg-transparent  text-white  justify-center box-border h-full flex flex-col 
-          text-base w-4/5 py-4 
+          text-base w-full py-4 
    sm:text-xl sm:p-8 sm:w-3/4
     md:text-2xl md:p-10 md:w-3/4
     lg:text-3xl lg:p-12 lg:w-8/12

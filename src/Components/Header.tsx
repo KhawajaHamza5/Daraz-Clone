@@ -7,7 +7,7 @@ const Header:React.FC=()=> {
   if(!Context){
     throw new Error('Context Not Found')
   }
-  const{isLogin} = Context;
+  const{isLogin,totalProducts,productName} = Context;
   const [showCart, setShowCart] = useState(false);
   const toggleCart = () => {
         setShowCart(!showCart);
@@ -53,13 +53,18 @@ const Header:React.FC=()=> {
 
         </div>
     </div>
-    <div className={`fixed top-15 right-0 h-auto w-48 bg-white text-orange-700 border-orange-700 shadow-lg border-2 transform transition-transform duration-300 flex   justify-center flex-col items-center ease-in-out z-50 ${
+    <div className={`fixed top-15 right-0 h-auto w-52 bg-white text-orange-700 border-orange-700 shadow-lg border-2 transform transition-transform duration-300 flex   justify-center flex-col items-center ease-in-out z-50 ${
           showCart ? 'translate-x-0' : 'translate-x-full'
         }`}>
        <h1>{isLogin? "Welcome Back":"LginFirst"}</h1>
-        <h2 className='text-orange-700 p-4'><b>Cart</b></h2>
-        <p className='p-4'><b>Product Name:</b></p>
-        <p className='p-4'><b>Total Product:</b></p>
+        <h2 className='text-orange-700 p-4'><b>Shopping Cart</b></h2>
+        <p className='p-4'><b>Total Product:<span className='text-black'>   {totalProducts}</span> </b></p>
+        {productName.map((name)=>
+        <p className='p-4'><b>Product Name:<span className='text-black'> {name}</span></b></p>
+        
+        )}
+        
+        
       </div>
     
     </>

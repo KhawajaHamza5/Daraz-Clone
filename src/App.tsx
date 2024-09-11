@@ -1,11 +1,9 @@
 import React from 'react';
-import Header from './Components/Header';
 import LoginPage from './Components/Login/ContextLogin/LoginPage';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
 import Layout from './Layouts/Layout';
-import { UserContextProvider } from './Components/Login/ContextLogin/CreateLoginContext';
 
 const Root = () => {
   return (
