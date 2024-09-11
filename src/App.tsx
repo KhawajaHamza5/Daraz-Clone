@@ -1,27 +1,36 @@
-import React from 'react'
-import Header from './Components/Header'
-import LoginPage from './Components/Login/ContextLogin/LoginPage'
-import Cart from './Components/Cart'
+import React from 'react';
+import Header from './Components/Header';
+import LoginPage from './Components/Login/ContextLogin/LoginPage';
 
-const App:React.FC=()=> {
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Components/Home';
+import Layout from './Layouts/Layout';
+import { UserContextProvider } from './Components/Login/ContextLogin/CreateLoginContext';
+
+const Root = () => {
   return (
     <>
- <div className='bg-black w-screen h-auto flex flex-col ' >
- <Header/>
- <div className='w-screen  items-center py-10 flex flex-col'>
-
- <Cart/>
-
-<LoginPage/>
-</div>
-
-
-
-</div>
-   
+        <div >
+          <Routes>
+            <Route path='/' element={<Layout/>}>
+            <Route path="/Login" element={<LoginPage />} />
+            <Route path="/" element={<Home />} />
+            
+            </Route>
+          </Routes>
+        
+       
+      </div>
     </>
-  
-  )
-}
+  );
+};
 
-export default App
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Root />
+    </Router>
+  );
+};
+
+export default App;
