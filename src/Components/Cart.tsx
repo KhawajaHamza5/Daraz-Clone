@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Rating from "./Login/rating";
+import Rating from "./rating";
 // import { UserContext } from "./Login/ContextLogin/CreateLoginContext";
 import useUserStore from "./Login/Zustrand/CreateLoginZustand";
+import ImageSlider from "./ImageSlider";
 interface Product {
   id: number;
   title: string;
@@ -17,8 +18,9 @@ interface Product {
 }
 
 const Cart: React.FC = () => {
-  const {isLogined,setTotalProducts,totalProducts,
-    setTotalBill,setProductName,totalBill} = useUserStore();
+  const isLogined = JSON.parse(localStorage.getItem('isLogined') || 'false');
+  const {setTotalProducts,totalProducts,
+    setTotalBill,totalBill,setProducts} = useUserStore();
   // const Contextt = useContext(UserContext);
   // if (!Contextt) {
   //   throw new Error("Context Not Found");
@@ -30,13 +32,13 @@ const Cart: React.FC = () => {
   //   setProductName,
   //   productName,
   // } = Contextt;
-  const [products, setProducts] = useState<Product[]>([]);
+  const [productss, setProductss] = useState<Product[]>([]);
 
   const url = "https://dummyjson.com/products";
   const getProducts = async () => {
     try {
       const resp = await axios.get(url);
-      setProducts(resp.data.products);
+      setProductss(resp.data.products);
     } catch (error) {
       console.log(error);
     }
@@ -47,36 +49,38 @@ const Cart: React.FC = () => {
 
   const divPerPage = 8;
   const [currentPage, setCurrentPge] = useState(0);
-  const divData = products.slice(
+  const divData = productss.slice(
     currentPage * divPerPage,
     (currentPage + 1) * divPerPage
   );
   const handlePage = (pageNumber: number) => {
     setCurrentPge(pageNumber);
   };
-  const totalPage = Math.ceil(products.length / divPerPage);
+  const totalPage = Math.ceil(productss.length / divPerPage);
   const handleAddCartButton = (name: string,price:number) => {
-    const product={name:{name}}
+    const products={name , price}
+    setProducts((prevProducts) => [...prevProducts, products]);
     setTotalProducts(totalProducts + 1);
     setTotalBill(totalBill+price);
 
   };
   return (
     <>
-      <div className="flex flex-col  items-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
+      <div className="flex flex-col items-center">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4 ">
           {divData.map((product,key) => (
               <div 
               key={key}
-              className="bg-slate-200 group shadow-md box-border rounded-lg p-2 pb-10 space-y-5" >
-            <div>
+              className="bg-slate-100 group shadow-md box-border rounded-lg p-2  space-y-5 flex flex-col justify-between " >
+            <div >
+              <div className="bg-slate-200 rounded-lg p-1" >
                 <img
                   className="w-full h-40
                object-contain mb-4 rounded-t-lg"
                   src={product.thumbnail}
                   alt="Product"
                 />
-
+</div>
                 <h2
                   className=" font-bold
              text-base"
@@ -110,15 +114,14 @@ const Cart: React.FC = () => {
                   </span>{" "}
                 </p>
                 <p><Rating ratings={product.rating}/></p>
+                <p  className="text-black 
+             text-base font-medium">In Stock: {product.stock}</p>
                 <p className=" text-base text-black mt-2">
                   {product.description}
                 </p>
               </div>
-              <div className="hidden group-hover:flex">
-                <p>{product.rating}</p>
-
-              </div>
-              <div className="flex justify-center items-center w-full h-1/4  mt-5">
+              
+              <div className="flex justify-center items-center w-full  ">
                 <div className=" flex justify-center  ">
                   <input
                     onClick={() => handleAddCartButton(product.title,product.price)}

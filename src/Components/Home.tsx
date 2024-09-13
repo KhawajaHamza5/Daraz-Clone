@@ -1,11 +1,21 @@
 import React from 'react'
 import Cart from './Cart'
-
+import useUserStore from './Login/Zustrand/CreateLoginZustand'
+import ImageSlider from './ImageSlider';
 const Home:React.FC=()=> {
+  const {showCart} = useUserStore();
   return (
+   
+   
     <>
-    <div className='h-28 bg-white w-full'>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatum, dignissimos! Cupiditate voluptatibus blanditiis necessitatibus explicabo, minima maxime amet dolores odit et quia debitis sint dolorum consectetur, numquam quasi itaque recusandae!</div>
-   <Cart/>
+
+  {showCart?(<div className='bg-black opacity-35 w-full pointer-events-none overflow-hidden fixed top-96 '>left-
+    <Cart/></div> ):
+   <>
+   <ImageSlider/>
+  <Cart/>
+  </>}
+   
    </>
   )
 }
