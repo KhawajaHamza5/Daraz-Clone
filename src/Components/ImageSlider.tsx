@@ -1,6 +1,6 @@
-import React from 'react';
+
 import 'react-slideshow-image/dist/styles.css';
-import { Fade, Slide } from 'react-slideshow-image';
+import { Fade } from 'react-slideshow-image';
 
 const slideImages = [
   {
@@ -20,21 +20,26 @@ const slideImages = [
   },
 ];
 
-function ImageSlider() {
-  return (
-    <div className='slide-container w-full p-5 mb-10 sm:h-52 md:h-60 h-52 lg:h-72 xl:h-80 2xl:h-[500px]'>
-      <Fade>
-        {slideImages.map((Image, index) => (
-          <div  key={index}>
-           <div>
-             <img className='h-40 sm:h-52 md:h-60 w-full xl:h-80 rounded-lg object-center lg:h-72 2xl:h-[500px]' src={Image.url} alt="" />
-             </div>
-            </div>
+const ImageSlider = () => {
 
+  return (
+    <div className='relative w-full p-5 mb-10 sm:h-52 md:h-60 h-52 lg:h-72 xl:h-80 2xl:h-[500px]'>
+      <Fade
+        prevArrow={<div className='hidden' />} 
+        nextArrow={<div className='hidden' />} 
+      >
+        {slideImages.map((Image, index) => (
+          <div key={index}>
+            <img
+              className='h-40 sm:h-52 md:h-60 w-full xl:h-80 rounded-lg object-center lg:h-72 2xl:h-[500px]'
+              src={Image.url}
+              alt={`Slide ${index}`}
+            />
+          </div>
         ))}
       </Fade>
     </div>
   );
-}
+};
 
 export default ImageSlider;

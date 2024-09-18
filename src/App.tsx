@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginPage from './Components/Login/LoginPage';
 
-import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './Components/Home';
 import Layout from './Layouts/Layout';
 
@@ -13,16 +13,16 @@ const Root = () => {
           <Routes>
           {isLogined ? (
             <>
-
            <Route path="/" element={<Layout />}>
-           <Route path="/Login" element={<Navigate to="/" replace />} />
+           <Route path="/Login" element={<LoginPage/>} />
                 <Route path="/" element={<Home />} />
                 </Route>
                 </>
           ) : (
             <>
               <Route path="/" element={<Layout />}>
-                <Route path="/Login" element={<LoginPage />} />
+                <Route path="/Login" element={<LoginPage/>} />
+                <Route path="/Loogin" element={<LoginPage/>} />
                 <Route path="/" element={<Home />} />
               </Route>
             </>

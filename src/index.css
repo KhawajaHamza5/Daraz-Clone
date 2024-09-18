@@ -4,3 +4,11 @@
 body{
     background-color: black;
 }
+.toastClass{
+    font-size: larger;
+    width: auto;
+    font-weight: bold;
+  font-family:'Times New Roman', Times, serif;
+}
+  
+  

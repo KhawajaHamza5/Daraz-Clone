@@ -21,7 +21,7 @@ const StarRating: React.FC<StarRatingProps> = ({ ratings, totalStars = 5 }) => {
     }
   });
 
-  return <div className="flex">{stars}</div>;
+  return <div className="flex mt-3 text-xl ">{stars}</div>;
 };
 
 export default StarRating;

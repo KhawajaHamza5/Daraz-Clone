@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import useUserStore from './Zustrand/CreateLoginZustand';
-
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 interface FormData {
   email: string;
@@ -9,8 +10,9 @@ interface FormData {
 }
 
 const LoginPage: React.FC = () => {
-  const [isLogined, setIsLogined] = useState<boolean>(false);
-  const { showCart } = useUserStore();
+  const navigate = useNavigate();
+ 
+  const { showCart,setIsLogined } = useUserStore();
 
   const existingUser = {
     existingEmail: 'hamza@gmail.com',
@@ -26,13 +28,15 @@ const LoginPage: React.FC = () => {
 
     if (existingUser.existingEmail === email && existingUser.existingPassword === password) {
       console.log('User matched');
-      alert("You are logged in");
-      localStorage.setItem('isLogined', JSON.stringify(true));
+      toast.success("You are logged in");
+      setIsLogined(true)
+      navigate("/");
       reset(); 
     } else {
       console.log('User not matched');
-      alert("Incorrect username or password");
-      localStorage.setItem('isLogined', JSON.stringify(false));
+      toast.error("Incorrect username or password");
+     setIsLogined(false)
+      
       reset();
     }
   };

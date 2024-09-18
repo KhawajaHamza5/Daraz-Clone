@@ -3,6 +3,9 @@ import { create } from 'zustand';
 interface Product {
   name: string;
   price: number;
+  thumbnail: string;
+  category: string;
+  discountPercentage: number;
 }
 
 interface UserState {
@@ -10,10 +13,13 @@ interface UserState {
   totalProducts: number;
   showCart: boolean;
   totalBill: number;
+  isLogined: boolean;
+  
   setShowCart: (status: boolean) => void;
   setProducts: (newProducts: Product[] | ((prevProducts: Product[]) => Product[])) => void;
   setTotalProducts: (totalProduct: number) => void;
   setTotalBill: (totalBill: number) => void;
+  setIsLogined: (status: boolean) => void;
 }
 
 const useUserStore = create<UserState>((set) => ({
@@ -21,6 +27,8 @@ const useUserStore = create<UserState>((set) => ({
   showCart: false,
   products: [],
   totalProducts: 0,
+  isLogined: JSON.parse(localStorage.getItem('isLogined') || 'false'), // Initialize from localStorage
+  
   setShowCart: (showCart) => set({ showCart }),
   
   setProducts: (newProducts) => set((state) => ({
@@ -28,7 +36,13 @@ const useUserStore = create<UserState>((set) => ({
   })),
 
   setTotalBill: (totalBill) => set({ totalBill: parseFloat(totalBill.toFixed(3)) }),
+  
   setTotalProducts: (totalProduct) => set({ totalProducts: totalProduct }),
+
+  setIsLogined: (status) => {
+    localStorage.setItem('isLogined', JSON.stringify(status)); // Update localStorage
+    set({ isLogined: status });
+  },
 }));
 
 export default useUserStore;
