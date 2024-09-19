@@ -29,6 +29,7 @@ interface UserState {
 const useUserStore = create<UserState>((set) => ({
   products: JSON.parse(localStorage.getItem('products') || '[]'),
   totalBill: parseFloat(localStorage.getItem('totalBill') || '0'),
+  quantity: parseInt(localStorage.getItem('quantity') || '0'),
   totalProducts: parseInt(localStorage.getItem('totalProducts') || '0'),
   showCart: false,
   isLogined: JSON.parse(localStorage.getItem('isLogined') || 'false'),
