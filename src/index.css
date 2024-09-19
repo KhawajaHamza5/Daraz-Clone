@@ -1,14 +1,20 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-body{
-    background-color: black;
+
+
+body {
+  background-color: black;
 }
-.toastClass{
-    font-size: larger;
-    width: auto;
-    font-weight: bold;
-  font-family:'Times New Roman', Times, serif;
+
+.Toastify__toast--info {
+  background-color: #c2410c !important; 
+  border: 2px solid white !important;
+
 }
-  
-  
+.toastClass {
+  @apply text-lg font-bold text-white; 
+}
+
+

@@ -26,7 +26,9 @@ const ImageSlider = () => {
     <div className='relative w-full p-5 mb-10 sm:h-52 md:h-60 h-52 lg:h-72 xl:h-80 2xl:h-[500px]'>
       <Fade
         prevArrow={<div className='hidden' />} 
-        nextArrow={<div className='hidden' />} 
+        nextArrow={<div className='hidden' />}
+        duration={3000}
+        transitionDuration={1000} 
       >
         {slideImages.map((Image, index) => (
           <div key={index}>
