@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-do
 import Home from './Components/Home';
 import Layout from './Layouts/Layout';
 import useUserStore from './Components/Login/Zustrand/CreateLoginZustand';
+import Product from './Components/Product';
 
 const Root = () => {
 const {isLogined} = useUserStore();
@@ -17,6 +18,7 @@ const {isLogined} = useUserStore();
            <Route path="/" element={<Layout />}>
            <Route path="/Login" element={<Navigate to="/" replace />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/product/:productId" element={<Product/>} />
                 </Route>
                 </>
           ) : (
@@ -25,8 +27,9 @@ const {isLogined} = useUserStore();
                 <Route path="/Login" element={<LoginPage/>} />
                 <Route path="/Loogin" element={<LoginPage/>} />
                 <Route path="/" element={<Home />} />
+                <Route path="/product/:productId" element={<Product/>} />
               </Route>
-            </>
+            </> 
           )}
           </Routes>
         

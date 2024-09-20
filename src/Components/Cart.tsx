@@ -4,6 +4,7 @@ import Rating from "./rating";
 import useUserStore from "./Login/Zustrand/CreateLoginZustand";
 import "./Loader.css";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 interface Product {
   id: number;
@@ -18,7 +19,7 @@ interface Product {
 }
 
 const fetchProducts = async (): Promise<Product[]> => {
-  const response = await fetch("https://dummyjson.com/products");
+  const response = await fetch("https://dummyjson.com/products?limit=150");
   const data = await response.json();
   return data.products;
 };
@@ -42,7 +43,7 @@ const Cart: React.FC = () => {
     });
   }, [products, sortOrder]);
 
-  const divPerPage = 8;
+  const divPerPage = 12;
   const divData = useMemo(() => sortedProducts.slice(
     currentPage * divPerPage,
     (currentPage + 1) * divPerPage
@@ -70,6 +71,7 @@ const Cart: React.FC = () => {
           return [...prevProducts, { name, price, thumbnail, category, discountPercentage, id, quantity: 1 }];
         }
       });
+  
       setTotalProducts(totalProducts + 1);
       setTotalBill(totalBill + (price * discountPercentage / 100));
       toast.success("Added To Cart");
@@ -95,14 +97,15 @@ const Cart: React.FC = () => {
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-4 gap-6 sm:gap-2 md:gap-3 md:gap-y-5 sm:gap-y-4 p-4 xl:gap-4 xl:gap-y-5">
         {divData.length > 0 ? (
           divData.map((product) => (
-            <div
+            <Link
               key={product.id}
-              className="bg-slate-100 group shadow-md box-border rounded-lg p-4 space-y-5 flex flex-col justify-between"
+              to={`/product/${product.id}`}
+              className="bg-slate-100 group shadow-md box-border rounded-lg p-4 sm:p-2  space-y-5 flex flex-col justify-between"
             >
-              <div>
+              <div className="group-hover:opacity-70">
                 <div className="bg-slate-200 rounded-lg p-1">
                   <img
                     className="w-full h-40 lg:h-52 2xl:h-60 object-contain mb-4 rounded-t-lg"
@@ -134,10 +137,20 @@ const Cart: React.FC = () => {
                   {product.description}
                 </p>
               </div>
-              <div className="flex justify-center items-center w-full">
+              <div className="flex group-hover:opacity-75 justify-center items-center w-full">
                 <div className="flex justify-center">
                   <input
-                    onClick={() => handleAddCartButton(product.title, product.price, product.thumbnail, product.category, product.discountPercentage, product.id)}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleAddCartButton(
+                        product.title,
+                        product.price,
+                        product.thumbnail,
+                        product.category,
+                        product.discountPercentage,
+                        product.id
+                      );
+                    }}
                     hidden={!isLogined}
                     className="bottom-2 bg-orange-600 rounded-lg text-center text-white text-base cursor-pointer px-5 py-2 self-center"
                     type="button"
@@ -145,7 +158,7 @@ const Cart: React.FC = () => {
                   />
                 </div>
               </div>
-            </div>
+            </Link>
           ))
         ) : (
           <div>No products available</div>
@@ -158,14 +171,14 @@ const Cart: React.FC = () => {
           onClick={() => handlePage(currentPage - 1)}
           type="button"
           value="Prev"
-          className="bg-orange-700 w-16 h-7 text-white disabled:bg-orange-700 disabled:opacity-70 disabled:text-gray-200 disabled:cursor-not-allowed rounded-tr-lg mx-4 text-base cursor-pointer sm:w-20 sm:h-8 sm:text-lg md:w-24 md:h-9 md:text-xl lg:w-28 lg:h-10 lg:text-xl xl:w-32 xl:h-12 xl:text-2xl 2xl:w-36 2xl:h-14 2xl:text-3xl"
+          className="bg-orange-700 w-16 h-7 text-white disabled:bg-orange-700 disabled:opacity-70 disabled:text-gray-200 disabled:cursor-not-allowed rounded-tr-lg mx-4 text-base cursor-pointer sm:w-20 sm:h-8 sm:text-lg md:w-24 md:h-9 md:text-xl lg:w-28 lg:h-10 lg:text-xl xl:w-32 xl:h-12 xl:text-2xl 2xl:w-36 2xl:h-14 2xl:text-3xl hover:opacity-70"
         />
         <input
           disabled={currentPage === totalPage - 1}
           onClick={() => handlePage(currentPage + 1)}
           type="button"
           value="Next"
-          className="bg-orange-700 w-16 h-7 text-white disabled:bg-orange-700 disabled:opacity-70 disabled:text-gray-200 disabled:cursor-not-allowed rounded-tl-lg mx-4 text-base cursor-pointer sm:w-20 sm:h-8 sm:text-lg md:w-24 md:h-9 md:text-xl lg:w-28 lg:h-10 lg:text-xl xl:w-32 xl:h-12 xl:text-2xl 2xl:w-36 2xl:h-14 2xl:text-3xl"
+          className="bg-orange-700 w-16 h-7 text-white disabled:bg-orange-700 disabled:opacity-70 disabled:text-gray-200 disabled:cursor-not-allowed rounded-tl-lg mx-4 text-base cursor-pointer sm:w-20 sm:h-8 sm:text-lg md:w-24 md:h-9 md:text-xl lg:w-28 lg:h-10 lg:text-xl xl:w-32 xl:h-12 xl:text-2xl 2xl:w-36 2xl:h-14 2xl:text-3xl hover:opacity-70"
         />
       </div>
     </div>

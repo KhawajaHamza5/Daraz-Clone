@@ -7,7 +7,7 @@ interface StarRatingProps {
   totalStars?: number; 
 }
 
-const StarRating: React.FC<StarRatingProps> = ({ ratings, totalStars = 5 }) => {
+const Rating: React.FC<StarRatingProps> = ({ ratings, totalStars = 5 }) => {
 
   const stars = Array.from({ length: totalStars }, (_, index) => {
     const starValue = index + 1;
@@ -21,7 +21,7 @@ const StarRating: React.FC<StarRatingProps> = ({ ratings, totalStars = 5 }) => {
     }
   });
 
-  return <div className="flex mt-3 text-xl ">{stars}</div>;
+  return <div className="flex text-xl lg:text-2xl xl:text-3xl 2xl:text-4xl ">{stars}</div>;
 };
 
-export default StarRating;
+export default Rating;
